@@ -8,9 +8,9 @@ import android.widget.ImageView;
 
 public class PostItem {
     private String title, excerpt, author, date;
-    private ImageView thumbnail;
+    private String thumbnail;
 
-    public PostItem(String title, String excerpt, String author, String date, ImageView thumbnail) {
+    public PostItem(String title, String excerpt, String author, String date, String thumbnail) {
         this.title = title;
         this.excerpt = excerpt;
         this.author = author;
@@ -50,11 +50,11 @@ public class PostItem {
         this.date = date;
     }
 
-    public ImageView getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(ImageView thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 }

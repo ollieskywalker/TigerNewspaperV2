@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         System.out.print("");
 
         viewPager = (ViewPager)findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(5);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
