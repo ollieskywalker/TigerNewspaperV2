@@ -85,7 +85,7 @@ public class MostRecent extends Fragment {
                 return postJSON;
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d("onAsyncClass" , "NOT WORKING");
+                Log.d("onAsyncClass" , "NOT WORKING dsfsdfsdfs");
             }
             return null;
         }
