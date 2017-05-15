@@ -1,0 +1,45 @@
+package com.example.eliaschang8.tabsandnavdrawer.Modler;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.example.eliaschang8.tabsandnavdrawer.R;
+
+/**
+ * Created by eliaschang8 on 4/26/17.
+ */
+
+public class DesActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_des);
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        //TextView textView = (TextView)findViewById(R.id.text_view);
+
+        setSupportActionBar(toolbar);
+        if (getIntent() != null) {
+            //textView.setText(getIntent().getStringExtra("string"));
+        }
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+}
