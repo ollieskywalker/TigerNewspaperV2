@@ -1,8 +1,10 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +49,7 @@ public class MostRecent extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -54,6 +57,7 @@ public class MostRecent extends Fragment {
         list = (ListView)view.findViewById(R.id.listView_recent);
         JSONParser parser = new JSONParser();
         parser.execute(URL);
+        list.setNestedScrollingEnabled(true);
 
     }
 

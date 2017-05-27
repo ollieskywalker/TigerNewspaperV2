@@ -1,9 +1,14 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,14 +21,19 @@ import android.view.MenuItem;
 import com.example.eliaschang8.tabsandnavdrawer.R;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.TestScreen;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.ViewPagerAdapter;
+import com.example.eliaschang8.tabsandnavdrawer.Modler.CustomDrawerLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ViewPager viewPager;
-    private DrawerLayout drawer;
+    private CustomDrawerLayout drawer;
     private TabLayout tabLayout;
     private String[] pageTitle = {"Most Recent", "Most Popular", "News", "Sports", "Feature", "Opinion"};
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +44,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         viewPager.setOffscreenPageLimit(5);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        drawer = (CustomDrawerLayout) findViewById(R.id.drawerLayout);
 
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         setSupportActionBar(toolbar);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
         //create default navigation drawer toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -45,11 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         //setting Tab layout (number of Tabs = number of ViewPager pages)
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        for (int i = 0; i < 6; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(pageTitle[i]));
-        }
-
         //set gravity for tab bar
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -60,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //set viewpager adapter
-        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
 
         //change Tab selection when swipe ViewPager
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -83,6 +89,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
+    }
+
+    private void setupViewPager (ViewPager viewPager)
+    {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new MostPopular(), "Most Popular");
+        adapter.addFragment(new MostRecent(), "Most Recent");
+        adapter.addFragment(new News(), "News");
+        adapter.addFragment(new Opinion(), "Opinion");
+        adapter.addFragment(new Sports(), "Sports");
+        viewPager.setAdapter(adapter);
+    }
+
+    static class Adapter extends FragmentPagerAdapter
+    {
+        private final List<Fragment> mFragments =  new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment (Fragment fragment, String title)
+        {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        public CharSequence getPageTitle(int position) {return mFragmentTitles.get(position);}
     }
 
     @Override

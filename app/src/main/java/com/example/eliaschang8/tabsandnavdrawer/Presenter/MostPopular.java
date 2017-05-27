@@ -1,8 +1,10 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ public class MostPopular extends Fragment {
         return inflater.inflate(R.layout.fragment_listview, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -45,5 +48,6 @@ public class MostPopular extends Fragment {
                 startActivity(intent);
             }
         });
+        listView.setNestedScrollingEnabled(true);
     }
 }
