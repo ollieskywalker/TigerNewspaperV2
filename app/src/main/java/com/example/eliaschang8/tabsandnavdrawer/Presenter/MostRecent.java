@@ -1,6 +1,7 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.eliaschang8.tabsandnavdrawer.Modler.DesActivity;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.JSONParser;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.PostAdapter;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.PostItem;
@@ -35,15 +39,21 @@ import java.util.List;
 public class MostRecent extends Fragment {
     private static final String TAG = "TAG";
     private ArrayList<PostItem>postsArray;
-    private ListView list;
+    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?_embed";
 
-    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts";
-
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mostrecent, container, false);
+    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_mostrecent, container, false);
+
+        ListView list = (ListView) view.findViewById(R.id.listView_recent);
+        JSONParser parser = new JSONParser(this, list);
+        parser.execute(URL);
+
+        if(list != null){
+            Log.d("MostRecent", "Yes");
+        }
+
+        return view;
 
     }
 
@@ -51,8 +61,5 @@ public class MostRecent extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        list = (ListView)view.findViewById(R.id.listView_recent);
-        JSONParser parser = new JSONParser(getActivity(), list);
-        parser.execute(URL);
     }
 }

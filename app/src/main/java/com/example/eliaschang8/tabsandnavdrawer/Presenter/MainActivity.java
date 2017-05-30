@@ -1,6 +1,7 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import com.example.eliaschang8.tabsandnavdrawer.R;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.TestScreen;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.ViewPagerAdapter;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -23,6 +25,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private TabLayout tabLayout;
     private String[] pageTitle = {"Most Recent", "Most Popular", "News", "Sports", "Feature", "Opinion"};
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // do nothing, just override
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

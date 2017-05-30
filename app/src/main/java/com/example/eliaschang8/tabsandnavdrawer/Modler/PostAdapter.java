@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eliaschang8.tabsandnavdrawer.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.List;
@@ -41,6 +42,11 @@ public class PostAdapter extends ArrayAdapter<PostItem> {
         TextView excerpt = (TextView) convertView.findViewById(R.id.textView_excerpt);
         TextView author = (TextView) convertView.findViewById(R.id.textView_author);
         TextView date = (TextView) convertView.findViewById(R.id.textView_date);
+        ImageView thumbNail = (ImageView) convertView.findViewById(R.id.imageView_thumbnail);
+
+        Picasso.with(getContext())
+                .load(item.getThumbnail())
+                .into(thumbNail);
 
         //put the text of the hero into the appropriate views
         title.setText(item.getTitle());
@@ -48,8 +54,8 @@ public class PostAdapter extends ArrayAdapter<PostItem> {
         author.setText("By: " + item.getAuthor());
         date.setText(item.getDate());
 
-        new DownloadImageTask((ImageView) convertView.findViewById(R.id.imageView_thumbnail))
-                .execute(item.getThumbnail());
+        //new DownloadImageTask((ImageView) convertView.findViewById(R.id.imageView_thumbnail))
+        //        .execute(item.getThumbnail());
 
         //return the view that you had edited
         return convertView;

@@ -1,21 +1,27 @@
 package com.example.eliaschang8.tabsandnavdrawer.Modler;
 
+import android.util.Log;
 import android.widget.ImageView;
+
+import java.util.ArrayList;
 
 /**
  * Created by csaper6 on 4/27/17.
  */
 
 public class PostItem {
-    private String title, excerpt, author, date;
+    private String title, excerpt, author, date, content;
     private String thumbnail;
+    private ArrayList<String> urls = new ArrayList<>();
 
-    public PostItem(String title, String excerpt, String author, String date, String thumbnail) {
+    public PostItem(String title, String excerpt, String author, String date, String thumbnail, String content) {
         this.title = title;
         this.excerpt = excerpt;
         this.author = author;
         this.date = date;
         this.thumbnail = thumbnail;
+        this.content = content;
+        //this.urls = urls;
     }
 
     public String getTitle() {
@@ -57,4 +63,27 @@ public class PostItem {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getUrls() {
+        String oneUrl = "";
+        Log.d("NNNNNNNNNNNN", "" + urls.size());
+        for (int i = 0; i < urls.size(); i++)
+        {
+            oneUrl += urls.get(i) + " ";
+        }
+        return oneUrl + "hi";
+    }
+
+    public void setUrls(ArrayList urls) {
+        this.urls = urls;
+    }
+
 }

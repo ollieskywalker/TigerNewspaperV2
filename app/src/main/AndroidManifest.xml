@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Presenter.MainActivity">
+        <activity android:name=".Presenter.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,6 +21,7 @@
         </activity>
         <activity android:name=".Modler.DesActivity"></activity>
         <activity android:name=".Modler.TestScreen"></activity>
+        <activity android:name=".Presenter.ArticleDes"></activity>
     </application>
 
 </manifest>

@@ -24,7 +24,7 @@ public class News extends Fragment {
     private static final String TAG = "TAG";
     private ArrayList<PostItem> postsArray;
     private ListView list;
-    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?filter[cat]=4";
+    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?filter[cat]=4&_embed";
 
     @Nullable
     @Override
@@ -38,7 +38,7 @@ public class News extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         list = (ListView)view.findViewById(R.id.listView_news);
-        JSONParser parser = new JSONParser(getActivity(), list);
+        JSONParser parser = new JSONParser(this, list);
         parser.execute(URL);
 
     }

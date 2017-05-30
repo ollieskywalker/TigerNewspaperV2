@@ -1,9 +1,18 @@
 package com.example.eliaschang8.tabsandnavdrawer.Modler;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.eliaschang8.tabsandnavdrawer.Presenter.ArticleDes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,13 +31,15 @@ import java.util.List;
 
 public class JSONParser extends AsyncTask<String, Void, String> {
     private static final String TAG = "TAG";
+    private ArrayList<String> urlList = new ArrayList<>();
+
     String postJSON = "";
 
     private ArrayList<PostItem>postsArray;
-    FragmentActivity fragmentActivity;
+    Fragment fragmentActivity;
     ListView list;
 
-    public JSONParser(FragmentActivity fragmentActivity, ListView list){
+    public JSONParser(Fragment fragmentActivity, ListView list){
         this.fragmentActivity = fragmentActivity;
         this.list = list;
     }
@@ -79,21 +90,13 @@ public class JSONParser extends AsyncTask<String, Void, String> {
                     String excerpt = renderedExcerpt.optString("rendered");
                     excerpt = android.text.Html.fromHtml(excerpt).toString();
                     //Get the author
-                    int id = objectPost.getInt("author");
-                    String author = "";
-                    if(id == 39) {
-                        author = "Alina";
-                    } else if (id == 11) {
-                        author = "Riley Segal";
-                    } else if (id == 18) {
-                        author = "Brandon Young";
-                    } else {
-                        author = "Edgar";
-                    }
+                    JSONObject _embed = objectPost.optJSONObject("_embedded");
+                    JSONArray array = _embed.optJSONArray("author");
+                    JSONObject author = array.optJSONObject(0);
+                    String name = author.optString("name");
 
                     String date  = objectPost.getString("date");
                     date = "Date: " + date.substring(date.indexOf("-")+1, date.indexOf("T")) + "-" + date.substring(0, date.indexOf("-"));
-
 
                     JSONObject betterFeaturedImage = objectPost.optJSONObject("better_featured_image");
                     JSONObject mediaDetail = betterFeaturedImage.optJSONObject("media_details");
@@ -101,7 +104,24 @@ public class JSONParser extends AsyncTask<String, Void, String> {
                     JSONObject thumbnail = sizes.optJSONObject("thumbnail");
                     String ImgURL = thumbnail.optString("source_url");
 
-                    PostItem currentPost = new PostItem(title, excerpt, author, date, ImgURL);
+                    JSONObject content = objectPost.optJSONObject("content");
+                    String contentRendered = content.optString("rendered");
+                    //contentRendered = android.text.Html.fromHtml(contentRendered).toString();
+
+//                    int http ;
+//                    int a = 0;
+//                    while (a < )
+//                    {
+//                        http = contentRendered.indexOf("http", a);
+//                        if(http == -1)
+//                            break;
+//                        String urlOne = contentRendered.substring(http, contentRendered.indexOf(" ", http) - 1);
+//                        Log.d("HEEEEEEEEEEEYYYYYYYYYYY", urlOne);
+//                        urlList.add(urlOne);
+//                        a = http + urlOne.length();
+//                    }
+
+                    PostItem currentPost = new PostItem(title, excerpt, name, date, ImgURL, contentRendered);
 
                     postsArray.add(currentPost);
 
@@ -117,8 +137,24 @@ public class JSONParser extends AsyncTask<String, Void, String> {
     }
 
     public void fillList(){
-        PostAdapter adapter = new PostAdapter(fragmentActivity, postsArray);
+        PostAdapter adapter = new PostAdapter(fragmentActivity.getActivity(), postsArray);
 
         list.setAdapter(adapter);
+        
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(fragmentActivity.getActivity(), "" + postsArray.get(position).getContent(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(fragmentActivity.getActivity(), DesActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("TITLE", postsArray.get(position).getTitle());
+                bundle.putString("DATE", postsArray.get(position).getDate());
+                bundle.putString("AUTHOR", postsArray.get(position).getAuthor());
+                bundle.putString("CONTENT", postsArray.get(position).getContent());
+                intent.putExtras(bundle);
+
+                fragmentActivity.startActivity(intent);
+            }
+        });
     }
 }

@@ -22,7 +22,7 @@ public class Feature extends Fragment {
     private static final String TAG = "TAG";
     private ArrayList<PostItem> postsArray;
     private ListView list;
-    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?filter[cat]=6";
+    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?filter[cat]=6&_embed";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class Feature extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         list = (ListView)view.findViewById(R.id.listView_feature);
-        JSONParser parser = new JSONParser(getActivity(), list);
+        JSONParser parser = new JSONParser(this, list);
         parser.execute(URL);
     }
 }

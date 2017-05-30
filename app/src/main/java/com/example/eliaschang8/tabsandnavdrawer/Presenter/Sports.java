@@ -24,7 +24,7 @@ public class Sports extends Fragment{
     private static final String TAG = "TAG";
     private ArrayList<PostItem> postsArray;
     private ListView list;
-    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?filter[cat]=7";
+    private static final String URL = "http://tigernewspaper.com/wordpress/wp-json/wp/v2/posts?filter[cat]=7&_embed";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class Sports extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         list = (ListView)view.findViewById(R.id.listView_sports);
-        JSONParser parser = new JSONParser(getActivity(), list);
+        JSONParser parser = new JSONParser(this, list);
         parser.execute(URL);
     }
 }
