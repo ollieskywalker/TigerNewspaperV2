@@ -26,18 +26,16 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         if (position ==0) {
             return new MostRecent();
         } else if (position == 1) {
-            return new MostPopular();
-        } else if (position == 2) {
             return new News();
-        }else if (position == 3) {
+        }else if (position == 2) {
             return new Sports();
-        }else if (position == 4) {
+        }else if (position == 3) {
             return new Feature();
         }else return new Opinion();
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return 5;
     }
 }

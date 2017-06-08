@@ -9,7 +9,7 @@
             android:title="Forum" />
         <item
             android:id="@+id/nav_saved_articles"
-            android:icon="@drawable/ic_library_books_black_24dp"
+            android:icon="@drawable/ic_star_black_24dp"
             android:title="Saved Articles" />
 
     </group>

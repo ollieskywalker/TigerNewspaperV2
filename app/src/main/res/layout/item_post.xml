@@ -1,58 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:allowUndo="true"
+        android:focusable="false"
+        android:paddingBottom="16dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Cross Country Wins CIF State" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16sp">
+        android:layout_height="142dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Cross country Wins State Finals!"
-                android:textAlignment="center"
-                android:textSize="20dp"/>
-
-        </LinearLayout>
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/textView_excerpt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:focusable="false"
+            tools:text="bybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfhbybrfh" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imageView_thumbnail"
+            android:layout_width="184dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/placeholder"
+            android:focusable="false"
+            />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView" />
+    </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:foregroundGravity="right"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
-                    android:layout_gravity="bottom"
-                    android:src="@drawable/placeholder" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-            </LinearLayout>
+        <!--
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:numStars="1"
+            android:rating="0"
+            android:stepSize="1"
+            android:focusable="false"
+            android:clickable="false"
+            />
+        -->
+        <TextView
+            android:id="@+id/textView_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.16"
+            android:focusable="false"
+            android:text="TextView"
+            tools:text="By Oliver Chang" />
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:focusable="false"
+            android:text="TextView"
+            android:textAlignment="textStart"
 
+            tools:text="10/10/99" />
 
     </LinearLayout>
 

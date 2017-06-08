@@ -1,9 +1,11 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,20 +18,30 @@ import android.view.MenuItem;
 import com.example.eliaschang8.tabsandnavdrawer.R;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.TestScreen;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.ViewPagerAdapter;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ViewPager viewPager;
     private DrawerLayout drawer;
     private TabLayout tabLayout;
-    private String[] pageTitle = {"Most Recent", "Most Popular", "News", "Sports", "Feature", "Opinion"};
+    private String[] pageTitle = {"Most Recent", "News", "Sports", "Feature", "Opinion"};
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // do nothing, just override
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        System.out.print("");
+
         viewPager = (ViewPager)findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(5);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
@@ -43,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //setting Tab layout (number of Tabs = number of ViewPager pages)
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(pageTitle[i]));
         }
 
@@ -87,7 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_forum) {
-            viewPager.setCurrentItem(0);
+           Intent i = new Intent(this, ForumActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_saved_articles) {
             viewPager.setCurrentItem(1);
         } else if (id == R.id.nav_notifications) {
