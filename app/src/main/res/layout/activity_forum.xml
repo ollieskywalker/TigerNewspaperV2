@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16sp"
+    tools:context="com.example.eliaschang8.tabsandnavdrawer.Modler.ArticlePage">
+
+
+    <FrameLayout
+        android:id="@+id/user_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="375dp"
+        android:focusable="false" >
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom">
+
+
+        </ListView>
+
+
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/editText_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_list_container"
+        android:ems="10"
+        android:hint="Add a comment..."
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_alignParentBottom="true" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/button_submit"
+        android:layout_toEndOf="@+id/button_submit"
+        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp" />
+</RelativeLayout>
