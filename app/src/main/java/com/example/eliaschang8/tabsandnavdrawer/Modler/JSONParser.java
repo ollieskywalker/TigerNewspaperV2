@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
+import android.util.JsonWriter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,10 +24,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,29 +54,44 @@ public class JSONParser extends AsyncTask<String, Void, String> {
         this.list = list;
     }
 
+    public JSONParser(Fragment fragmentActivity, ListView list, String PostJSON)
+    {
+        this.fragmentActivity = fragmentActivity;
+        this.list = list;
+        this.postJSON = postJSON;
+    }
+
     @Override
     protected String doInBackground(String... urls) {
-        try {
-            java.net.URL url = new java.net.URL(urls[0]);
-            ActualURL = urls;
-            URLConnection connection = url.openConnection();
+        if (postJSON.length() != 0) {
+            try {
+                java.net.URL url = new java.net.URL(urls[0]);
+                ActualURL = urls;
+                URLConnection connection = url.openConnection();
 
-            InputStream inputStream = connection.getInputStream();
+                InputStream inputStream = connection.getInputStream();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
 
-            while((line = reader.readLine()) != null){
-                postJSON += line;
-                Log.d("onAsyncClass" , "Looping");
+                while ((line = reader.readLine()) != null) {
+                    postJSON += line;
+                    Log.d("onAsyncClass", "Looping");
+                }
+                return postJSON;
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("onAsyncClass", "NOT WORKING dsfsdfsdfs");
             }
-            return postJSON;
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.d("onAsyncClass" , "NOT WORKING dsfsdfsdfs");
+
+        }
+        else
+        {
+
         }
         return null;
     }
+
 
     @Override
     protected void onPostExecute(String s) {

@@ -1,10 +1,12 @@
 package com.example.eliaschang8.tabsandnavdrawer.Modler;
 
 import android.content.SharedPreferences;
+import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonWriter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +17,11 @@ import android.widget.Toast;
 import com.example.eliaschang8.tabsandnavdrawer.R;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArticlePage extends AppCompatActivity {
 
@@ -134,6 +140,27 @@ public class ArticlePage extends AppCompatActivity {
         {
             super.onBackPressed();
         }
+    }
+
+    public void writeJsonStream(OutputStream out, List<Message> messages) throws IOException {
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        writer.setIndent("  ");
+        writeMessagesArray(writer, messages);
+        writer.close();
+    }
+
+    public void writeMessagesArray(JsonWriter writer, List<Message> messages) throws IOException {
+        writer.beginArray();
+        for (Message message : messages) {
+            writeMessage(writer);
+        }
+        writer.endArray();
+    }
+
+    public void writeMessage(JsonWriter writer) throws IOException {
+        writer.beginObject();
+
+        writer.endObject();
     }
 
 //    private void loadUrls() { //leave this alone
