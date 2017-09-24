@@ -1,11 +1,13 @@
 package com.example.eliaschang8.tabsandnavdrawer.Presenter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.util.ArraySet;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +22,10 @@ import com.example.eliaschang8.tabsandnavdrawer.Modler.TestScreen;
 import com.example.eliaschang8.tabsandnavdrawer.Modler.ViewPagerAdapter;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 
+import java.util.Set;
+
+import static com.example.eliaschang8.tabsandnavdrawer.Modler.ArticlePage.SAVED_ARTICLE_KEY;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ViewPager viewPager;
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout tabLayout;
     private String[] pageTitle = {"Most Recent", "News", "Sports", "Feature", "Opinion"};
 
+    private Set<String> keys = new ArraySet<>();
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -35,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences.Editor editor = getSharedPreferences(SAVED_ARTICLE_KEY, MODE_PRIVATE).edit();
+        editor.putStringSet("KEYS", keys);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ArticlePage extends AppCompatActivity {
 
@@ -40,6 +41,10 @@ public class ArticlePage extends AppCompatActivity {
 
     public static String SAVED_ARTICLE_KEY = "1234";
 
+    private int articleID;
+
+    private SharedPreferences getter;
+
     CustomPagerAdapter adapter;
     ViewPager pager;
 
@@ -50,9 +55,10 @@ public class ArticlePage extends AppCompatActivity {
         wireWidgets();
         initialize();
         setOnClickListeners();
-
+        getter = getApplicationContext().getSharedPreferences(SAVED_ARTICLE_KEY, MODE_PRIVATE);
 
         Bundle extras = getIntent().getExtras();
+        articleID = extras.getInt("ID");
         String titleValue = extras.getString("TITLE");
         title.setText(titleValue);
         String contentValue = extras.getString("CONTENT");
@@ -116,9 +122,12 @@ public class ArticlePage extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putString("saved_article", URL);
+                Set<String> savedID = getter.getStringSet("KEYS", null);
+                savedID.add("" + articleID);
+                editor.clear();
+                editor.putStringSet("KEYS", savedID);
                 editor.commit();
-                Toast.makeText(ArticlePage.this, URL.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ArticlePage.this, articleID, Toast.LENGTH_SHORT).show();
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {
@@ -140,27 +149,6 @@ public class ArticlePage extends AppCompatActivity {
         {
             super.onBackPressed();
         }
-    }
-
-    public void writeJsonStream(OutputStream out, List<Message> messages) throws IOException {
-        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
-        writer.setIndent("  ");
-        writeMessagesArray(writer, messages);
-        writer.close();
-    }
-
-    public void writeMessagesArray(JsonWriter writer, List<Message> messages) throws IOException {
-        writer.beginArray();
-        for (Message message : messages) {
-            writeMessage(writer);
-        }
-        writer.endArray();
-    }
-
-    public void writeMessage(JsonWriter writer) throws IOException {
-        writer.beginObject();
-
-        writer.endObject();
     }
 
 //    private void loadUrls() { //leave this alone

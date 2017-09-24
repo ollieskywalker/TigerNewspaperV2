@@ -1,38 +1,26 @@
 package com.example.eliaschang8.tabsandnavdrawer.Modler;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-
-import com.example.eliaschang8.tabsandnavdrawer.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
- * Created by csaper6 on 5/15/17.
+ * Created by kmyohan0 on 9/24/2017.
  */
 
-public class JSONParser extends AsyncTask<String, Void, String> {
+public class SavedJSONParser extends AsyncTask<String, Void, String> {
+
     private static final String TAG = "TAG";
     private ArrayList<String> imageUrlList = new ArrayList<>();
     private String[] ActualURL = null;
@@ -45,7 +33,7 @@ public class JSONParser extends AsyncTask<String, Void, String> {
     ListView list;
     private int articleId;
 
-    public JSONParser(Fragment fragmentActivity, ListView list){
+    public SavedJSONParser(Fragment fragmentActivity, ListView list){
         this.fragmentActivity = fragmentActivity;
         this.list = list;
     }
@@ -129,36 +117,9 @@ public class JSONParser extends AsyncTask<String, Void, String> {
                     //Log.d(TAG, "onPostExecute: " + ImgURL);
                 }
 
-                fillList();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public void fillList(){
-        PostAdapter adapter = new PostAdapter(fragmentActivity.getActivity(), postsArray);
-
-        list.setAdapter(adapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(fragmentActivity.getActivity(), "" + postsArray.get(position).getContent(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(fragmentActivity.getActivity(), ArticlePage.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("URL", ActualURL[0]);
-                bundle.putString("TITLE", postsArray.get(position).getTitle());
-                bundle.putString("DATE", postsArray.get(position).getDate());
-                bundle.putString("AUTHOR", postsArray.get(position).getAuthor());
-                bundle.putString("CONTENT", postsArray.get(position).getContent());
-                bundle.putString("FEATURED", postsArray.get(position).getFeaturedImage());
-                bundle.putInt("ID", articleId);
-                intent.putExtras(bundle);
-
-                fragmentActivity.startActivity(intent);
-            }
-        });
     }
 }
